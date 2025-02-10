@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Strength Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #e68900;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Concrete Strength Calculator</h2>
+        <input type="number" id="cement" placeholder="Cement weight (kg/m³)">
+        <input type="number" id="sand" placeholder="Sand weight (kg/m³)">
+        <input type="number" id="gravel" placeholder="Gravel weight (kg/m³)">
+        <input type="number" id="water" placeholder="Water weight (kg/m³)">
+        <button onclick="calculateStrength()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        function calculateStrength() {
+            let cement = parseFloat(document.getElementById('cement').value);
+            let water = parseFloat(document.getElementById('water').value);
+            
+            if (isNaN(cement) || isNaN(water) || cement <= 0 || water <= 0) {
+                document.getElementById('result').innerText = "Please enter valid numbers";
+                return;
+            }
+            
+            let w_c_ratio = water / cement;
+            let A = 6000;
+            let B = 5000;
+            let strength_psi = A - B * w_c_ratio;
+            let strength_mpa = strength_psi / 145.038;
+            
+            document.getElementById('result').innerText = "Estimated Compressive Strength: " + strength_mpa.toFixed(2) + " MPa";
+        }
+    </script>
+</body>
+</html>
